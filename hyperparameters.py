@@ -15,9 +15,11 @@ class hparams:
         self.reward_scale = 7.0
         #Learning Loop paramaters
         self.faff_max = 500
+        self.running_mean = -100
         #Automation Run Parameters
         self.window_rate = 0.1
-        self.pc_max = 5
+        self.pc_max = 3
+        self.max_window_exp = 6
         #Environment Parameters
         self.env_shape = 40
         self.action_space_N = 8

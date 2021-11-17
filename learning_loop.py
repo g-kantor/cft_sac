@@ -26,6 +26,7 @@ class learning:
         self.j = 0
         self.faff = 0
         self.faff_max = hp.faff_max
+        self.running_mean = hp.running_mean
         f = open('current_result.txt', 'r')
         tmp1 = f.readlines()
         tmp2 = []
@@ -35,6 +36,7 @@ class learning:
         self.rewards = [tmp2[0]]
         self.solution = np.array(tmp2[1:]) - self.env.shifts
         self.strsol = []
+        self.avg_rewards = []
 
     def loop(self, iteration, rate):
         self.productivity_counter = False
@@ -54,6 +56,7 @@ class learning:
             self.agent.learn()
             self.observation = self.observation_
             self.rewards.append(self.reward)
+            self.avg_rewards.append(np.mean(self.rewards[-self.running_mean:]))
 
             if self.env.done:
                 for i in self.env.nptrack:
