@@ -8,16 +8,16 @@ from numpy import linalg as LA
 class learning:
     def __init__(self):
         self.env = env()
-        self.hp = hparams()
-        self.agent = Agent(alpha=self.hp.alpha, beta=self.hp.beta,
+        hp = hparams()
+        self.agent = Agent(alpha=hp.alpha, beta=hp.beta,
                            input_dims=[self.env.env_shape],
-                           env=self.env, gamma=self.hp.gamma,
+                           env=self.env, gamma=hp.gamma,
                            n_actions=self.env.action_space_N,
-                           max_size=self.hp.max_size, tau=self.hp.tau,
-                           layer1_size=self.hp.layer1_size,
-                           layer2_size=self.hp.layer2_size,
-                           batch_size=self.hp.batch_size,
-                           reward_scale=self.hp.reward_scale)
+                           max_size=hp.max_size, tau=hp.tau,
+                           layer1_size=hp.layer1_size,
+                           layer2_size=hp.layer2_size,
+                           batch_size=hp.batch_size,
+                           reward_scale=hp.reward_scale)
         self.load_checkpoint = False
         self.done = False
         self.fdone = False
@@ -25,6 +25,7 @@ class learning:
         self.env.reset_env()
         self.j = 0
         self.faff = 0
+        self.faff_max = hp.faff_max
         f = open('current_result.txt', 'r')
         tmp1 = f.readlines()
         tmp2 = []
@@ -69,7 +70,7 @@ class learning:
             else:
                 self.faff += 1
 
-            if self.faff==self.hp.faff_max:
+            if self.faff==self.faff_max:
                 self.fdone = True
 
             print(self.solution + self.env.shifts)
