@@ -1,0 +1,79 @@
+import numpy as np
+from sac_agent import Agent
+from environment import env
+from hyperparameters import hparams
+import matplotlib.pyplot as plt
+from numpy import linalg as LA
+
+class learning:
+    def __init__(self):
+        self.env = env()
+        self.hp = hparams()
+        self.agent = Agent(alpha=self.hp.alpha, beta=self.hp.beta,
+                           input_dims=[self.env.env_shape],
+                           env=self.env, gamma=self.hp.gamma,
+                           n_actions=self.env.action_space_N,
+                           max_size=self.hp.max_size, tau=self.hp.tau,
+                           layer1_size=self.hp.layer1_size,
+                           layer2_size=self.hp.layer2_size,
+                           batch_size=self.hp.batch_size,
+                           reward_scale=self.hp.reward_scale)
+        self.load_checkpoint = False
+        self.done = False
+        self.fdone = False
+        self.observation = self.env.npstatus
+        self.env.reset_env()
+        self.j = 0
+        self.faff = 0
+        f = open('current_result.txt', 'r')
+        tmp1 = f.readlines()
+        tmp2 = []
+        f.close()
+        for i in tmp1:
+            tmp2.append(float(i))
+        self.rewards = [tmp2[0]]
+        self.solution = np.array(tmp2[1:]) - self.env.shifts
+        self.strsol = []
+
+    def loop(self, iteration, rate):
+        self.productivity_counter = False
+        self.env.guess_sizes = rate**iteration * self.env.guess_sizes
+        if iteration != 0:
+            self.env.guessing_run_list = np.zeros(self.env.action_space_N,
+                                                  dtype=bool)
+
+        while not self.fdone:
+            self.j += 1
+            self.action = self.agent.choose_action(self.observation)
+            self.env.move(self.action, max(self.rewards), self.solution)
+            self.observation_ = self.env.npstatus
+            self.reward = self.env.reward
+            self.agent.remember(self.observation, self.action, self.reward,
+                                self.observation_, self.done)
+            self.agent.learn()
+            self.observation = self.observation_
+            self.rewards.append(self.reward)
+
+            if self.env.done:
+                for i in self.env.nptrack:
+                    self.strsol.append(str(i) + '\n')
+                self.solution = np.copy(self.env.nptrack - self.env.shifts)
+                file = open('current_result.txt', 'w')
+                file.write(str(self.env.reward) + '\n') #FIRST LINE IS ACCURACY
+                file.writelines(self.strsol)
+                file.close()
+                self.strsol = []
+                self.env.reset_env()
+                self.faff = 0
+                self.productivity_counter = True
+            else:
+                self.faff += 1
+
+            if self.faff==self.hp.faff_max:
+                self.fdone = True
+
+            print(self.solution + self.env.shifts)
+            print('step %.1f'% self.j, 'avg reward %.10f' % \
+                  np.mean(self.rewards[-25:]), 'current reward %.10f' % \
+                  self.reward, 'max reward %.10f' % max(self.rewards),
+                  'faff %.1f' % self.faff)
