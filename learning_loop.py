@@ -37,6 +37,10 @@ class learning:
         self.solution = np.array(tmp2[1:]) - self.env.shifts
         self.strsol = []
         self.avg_rewards = []
+        self.best_rewards = []
+        self.parameter_data_sets = []
+        for i in range(hp.action_space_N):
+            self.parameter_data_sets.append([])
 
     def loop(self, iteration, rate):
         self.productivity_counter = False
@@ -57,6 +61,8 @@ class learning:
             self.observation = self.observation_
             self.rewards.append(self.reward)
             self.avg_rewards.append(np.mean(self.rewards[-self.running_mean:]))
+            for i in range(self.env.action_space_N):
+                self.parameter_data_sets[i].append(self.env.nptrack[i])
 
             if self.env.done:
                 for i in self.env.nptrack:
@@ -67,6 +73,7 @@ class learning:
                 file.writelines(self.strsol)
                 file.close()
                 self.strsol = []
+                self.best_rewards.append(self.reward)
                 self.env.reset_env()
                 self.faff = 0
                 self.productivity_counter = True
