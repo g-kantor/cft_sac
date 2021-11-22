@@ -1,3 +1,5 @@
-# cft_sac
+# Welcome to the CFT SAC algorithm.
 
-Test
+## Getting started
+
+`testcode`
