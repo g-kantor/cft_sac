@@ -21,6 +21,7 @@ class hparams:
         self.pc_max = 5 #max number of reinitialisations before window decrease
         self.max_window_exp = 3 #maximum number of window changes
         #Environment Parameters
+        self.guessing_run = True #start with a guessing_run?
         self.env_shape = 40 #number of z points
         self.action_space_N = 8 # number of parameters or twice the number of operators
         self.hh = 0.05 #external weight/2

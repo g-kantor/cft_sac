@@ -61,7 +61,7 @@ class conf_blocks:
                 c -= ope_coeffs[i]*self.g_b(hh, (deltas[i])/2, (deltas[i])/2, z,
                                             zb)
             if block_type[i] == 4:
-                c += ope_coeffs[i]*self.g_b_symm(hh, (deltas[i] + spin_list[i])/2,
+                c -= ope_coeffs[i]*self.g_b_symm(hh, (deltas[i] + spin_list[i])/2,
                                                  (deltas[i] - spin_list[i])/2,
                                                  z, zb)
 

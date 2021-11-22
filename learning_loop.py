@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from numpy import linalg as LA
 
 class learning:
-    def __init__(self):
+    def __init__(self, g_run=True):
         self.env = env()
         hp = hparams()
         self.agent = Agent(alpha=hp.alpha, beta=hp.beta,
@@ -41,12 +41,11 @@ class learning:
         self.parameter_data_sets = []
         for i in range(hp.action_space_N):
             self.parameter_data_sets.append([])
+        self.env.guessing_run = g_run
 
-    def loop(self, iteration, rate):
+    def loop(self, iteration, rate, g_run):
         self.productivity_counter = False
         self.env.guess_sizes = rate**iteration * self.env.guess_sizes
-        if iteration != 0:
-            self.env.guessing = False
 
         while not self.fdone:
             self.j += 1

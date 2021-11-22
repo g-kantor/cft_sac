@@ -18,7 +18,7 @@ class env:
         self.guess_sizes = hp.guess_sizes
         self.negative_list = hp.negative_list
         self.hh = hp.hh
-        self.guessing_run = True
+        self.guessing_run = hp.guessing_run
         self.zre = hp.zre
         self.zim = hp.zim
         self.block_type = hp.block_type
