@@ -46,8 +46,7 @@ class learning:
         self.productivity_counter = False
         self.env.guess_sizes = rate**iteration * self.env.guess_sizes
         if iteration != 0:
-            self.env.guessing_run_list = np.zeros(self.env.action_space_N,
-                                                  dtype=bool)
+            self.env.guessing = False
 
         while not self.fdone:
             self.j += 1
