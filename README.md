@@ -13,7 +13,7 @@ too stable) you can always clone the repository.
 
 Running the code is super simple. All you have to do is run in the terminal:
 
-`python run.py`
+> python run.py
 
 You might need to change "python" to "python3" depending on you installation of
 Python.
