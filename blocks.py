@@ -47,12 +47,16 @@ class conf_blocks:
                 complex(sc.hyp2f1(hb, hb, 2*hb, 1 - z)))
         return res_b
 
-    def cons(self, z, zb, deltas, ope_coeffs, hh):
-        c = ope_coeffs[0]*self.g_a(hh, (deltas[0])/2, (deltas[0])/2, z, zb) - \
-            ope_coeffs[1]*self.g_b(hh, (deltas[1])/2, (deltas[1])/2, z, zb) - \
-            ope_coeffs[2]*self.g_b_symm(hh, (deltas[2] + 1)/2,
-                                        (deltas[2] - 1)/2, z, zb) - \
-            ope_coeffs[3]*self.g_b_symm(hh, (deltas[3] + 2)/2,
-                                        (deltas[3] - 2)/2, z, zb) - \
-            (z**(2*hh)) * (zb**(2*hh))
+    def cons(self, z, zb, deltas, ope_coeffs, hh, block_type, spin_list):
+        c = - (z**(2*hh)) * (zb**(2*hh))
+        for i in range(len(deltas)):
+            if block_type[i] == 1:
+                c += ope_coeffs[i]*self.g_a(hh, (deltas[i])/2, (deltas[i])/2, z, zb)
+            if block_type[i] == 2:
+                c += ope_coeffs[i]*self.g_a_symm(hh, (deltas[i] + spin_list[i])/2, (deltas[i] - spin_list[i])/2, z, zb)
+            if block_type[i] == 3:
+                c -= ope_coeffs[i]*self.g_b(hh, (deltas[i])/2, (deltas[i])/2, z, zb)
+            if block_type[i] == 4:
+                c += ope_coeffs[i]*self.g_b_symm(hh, (deltas[i] + spin_list[i])/2, (deltas[i] - spin_list[i])/2, z, zb)
+
         return c

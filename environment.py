@@ -23,6 +23,8 @@ class env:
                                            True, True], dtype=bool)
         self.zre = hp.zre
         self.zim = hp.zim
+        self.block_type = hp.block_type
+        self.spin_list = hp.spin_list
 
     def move(self, action, largest, solution): #remember that there are only
                                                #real things here
@@ -50,7 +52,8 @@ class env:
                                              self.zre[i] - self.zim[i]*1j,
                                              self.nptrack[:int(self.action_space_N/2)],
                                              self.nptrack[int(self.action_space_N/2):],
-                                             self.hh).real
+                                             self.hh, self.block_type,
+                                             self.spin_list).real
 
         self.reward = 1 / LA.norm(self.npstatus)
 
