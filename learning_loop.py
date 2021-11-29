@@ -43,7 +43,7 @@ class learning:
             self.parameter_data_sets.append([])
         self.env.guessing_run = g_run
 
-    def loop(self, iteration, rate, g_run):
+    def loop(self, iteration, rate):
         self.productivity_counter = False
         self.env.guess_sizes = rate**iteration * self.env.guess_sizes
 
