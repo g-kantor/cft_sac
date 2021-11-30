@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from numpy import linalg as LA
 
 class learning:
-    def __init__(self, g_run=True):
+    def __init__(self, g_run):
         self.env = env()
         hp = hparams()
         self.agent = Agent(alpha=hp.alpha, beta=hp.beta,
@@ -41,7 +41,8 @@ class learning:
         self.parameter_data_sets = []
         for i in range(hp.action_space_N):
             self.parameter_data_sets.append([])
-        self.env.guessing_run = g_run
+        self.env.guessing_run_list = g_run
+        self.verbose = hp.verbose
 
     def loop(self, iteration, rate):
         self.productivity_counter = False
@@ -81,8 +82,16 @@ class learning:
             if self.faff==self.faff_max:
                 self.fdone = True
 
-            print(self.solution + self.env.shifts)
-            print('step %.1f'% self.j, 'avg reward %.10f' % \
-                  np.mean(self.rewards[-25:]), 'current reward %.10f' % \
-                  self.reward, 'max reward %.10f' % max(self.rewards),
-                  'faff %.1f' % self.faff)
+            if self.verbose == 'e':
+                print(self.solution + self.env.shifts)
+                print('step %.1f'% self.j, 'avg reward %.10f' % \
+                      np.mean(self.rewards[-25:]), 'current reward %.10f' % \
+                      self.reward, 'max reward %.10f' % max(self.rewards),
+                      'faff %.1f' % self.faff)
+            if self.verbose == 'o':
+                if self.fdone:
+                    print(self.solution + self.env.shifts)
+                    print('step %.1f'% self.j, 'avg reward %.10f' % \
+                          np.mean(self.rewards[-25:]), 'current reward %.10f' % \
+                          self.reward, 'max reward %.10f' % max(self.rewards),
+                          'faff %.1f' % self.faff)

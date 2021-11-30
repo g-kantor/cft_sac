@@ -6,7 +6,7 @@ import numpy as np
 
 if __name__ == '__main__':
     hp = hparams()
-    lrn = learning(g_run=hp.guessing_run)
+    lrn = learning(g_run=hp.guessing_run_list)
     window_scale_exp = 0
     max_window_exp = hp.max_window_exp
     rate = hp.window_rate
@@ -30,10 +30,10 @@ if __name__ == '__main__':
         if pc == hp.pc_max:
             window_scale_exp += 1
             pc = 0
-            hp.guessing_run = False
+            hp.guessing_run_list = np.zeros(hp.action_space_N, dtype=np.bool)
 
         del lrn
-        lrn = learning(g_run=hp.guessing_run)
+        lrn = learning(g_run=hp.guessing_run_list)
 
 '''
     figure(figsize=(10, 10), dpi=100)

@@ -18,7 +18,7 @@ class env:
         self.guess_sizes = hp.guess_sizes
         self.negative_list = hp.negative_list
         self.hh = hp.hh
-        self.guessing_run = hp.guessing_run
+        self.guessing_run_list = hp.guessing_run_list
         self.zre = hp.zre
         self.zim = hp.zim
         self.block_type = hp.block_type
@@ -31,14 +31,14 @@ class env:
         for i in range(self.action_space_N):
             if i in self.negative_list: #add here all the OPE squares which are
                                         #negative
-                if self.guessing_run:
+                if self.guessing_run_list[i]:
                     self.nptrack[i] = self.shifts[i] + self.guess_sizes[i] * \
                                       self.nptrack[i]
                 else:
                     self.nptrack[i] = self.shifts[i] + self.guess_sizes[i] * \
                                       self.nptrack[i] + solution[i]
             else:
-                if self.guessing_run:
+                if self.guessing_run_list[i]:
                     self.nptrack[i] = self.shifts[i] + abs(self.guess_sizes[i] \
                                       * self.nptrack[i])
                 else:

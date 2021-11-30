@@ -16,22 +16,29 @@ class hparams:
         #Learning Loop paramaters
         self.faff_max = 500 #maximum time spent not improving
         self.running_mean = 100 #number of terms to be averaged over in the running mean
+        self.verbose = 'e' #How much the code should print:
+                           #e - print everything
+                           #o - only after a reinitialisation
+                           #n - no output
         #Automation Run Parameters
         self.window_rate = 0.1 #window decrease rate (between 1 and 0)
         self.pc_max = 5 #max number of reinitialisations before window decrease
         self.max_window_exp = 5 #maximum number of window changes
         #Environment Parameters
         self.guessing_run = True #start with a guessing_run?
+        self.guessing_run_list = np.array([1, 0, 1, 1,
+                                           1, 1, 1, 1], dtype=np.bool)
         self.env_shape = 40 #number of z points
         self.action_space_N = 8 # number of parameters or twice the number of operators
         self.hh = 0.05 #external weight/2
         self.shifts = np.array([0.0, 1.5, 0.5, 1.5, 0.5, 0.0, 0.0, 0.0]) #minimum values
         self.guess_sizes = np.array([1.0, 1.0, 1.2, 1.0, 1.0, 1.0, 1.0, 1.0]) #starting windows
         self.negative_list = [6] #which parameters can be negative
-        self.block_type = [1, 3, 4, 4] #type 1: g_a (scalar, s channel), type 2:
-                                       #g_a_symm (spin 1+, s channel), type 3:
-                                       #g_b (scalar, t channel), type 4:
-                                       #g_b_symm (spin 1+, t channel)
+        self.block_type = [1, 3, 4, 4]
+                                       #type 1: g_a (scalar, s channel),
+                                       #type 2: g_a_symm (spin 1+, s channel),
+                                       #type 3: g_b (scalar, t channel),
+                                       #type 4: g_b_symm (spin 1+, t channel)
         self.spin_list = [0, 0, 1, 2] #spin partition
         self.zre = [0.28174921068496483, 0.37171247358548106,
                     0.8192128071960839, 0.4898011929480619,
