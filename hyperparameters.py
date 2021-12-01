@@ -26,7 +26,6 @@ class hparams:
         self.max_window_exp = 5 #maximum number of window changes
         #Environment Parameters
         self.reward_reset = True #start with fresh reward?
-        self.guessing_run = True #start with a guessing_run?
         self.guessing_run_list = np.array([1, 0, 1, 1,
                                            1, 1, 1, 1], dtype=np.bool)
         self.env_shape = 40 #number of z points
