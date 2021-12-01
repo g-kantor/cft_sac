@@ -27,6 +27,7 @@ class learning:
         self.faff = 0
         self.faff_max = hp.faff_max
         self.running_mean = hp.running_mean
+        self.reward_reset = hp.reward_reset
         f = open('current_result.txt', 'r')
         tmp1 = f.readlines()
         tmp2 = []
@@ -38,15 +39,20 @@ class learning:
         self.strsol = []
         self.avg_rewards = []
         self.best_rewards = []
+        self.best_accuracy = 0.0
         self.parameter_data_sets = []
         for i in range(hp.action_space_N):
             self.parameter_data_sets.append([])
         self.env.guessing_run_list = g_run
         self.verbose = hp.verbose
+        self.first_run = False
 
     def loop(self, iteration, rate):
         self.productivity_counter = False
         self.env.guess_sizes = rate**iteration * self.env.guess_sizes
+        if self.first_run:
+            if self.reward_reset:
+                self.rewards = [0.0]
 
         while not self.fdone:
             self.j += 1
@@ -73,6 +79,7 @@ class learning:
                 file.close()
                 self.strsol = []
                 self.best_rewards.append(self.reward)
+                self.best_accuracy = self.env.abs_error
                 self.env.reset_env()
                 self.faff = 0
                 self.productivity_counter = True
@@ -83,10 +90,12 @@ class learning:
                 self.fdone = True
 
             if self.verbose == 'e':
+                print(self.first_run)
                 print(self.solution + self.env.shifts)
                 print('step %.1f'% self.j, 'avg reward %.10f' % \
                       np.mean(self.rewards[-25:]), 'current reward %.10f' % \
                       self.reward, 'max reward %.10f' % max(self.rewards),
+                      'max accuracy %.10f' % self.best_accuracy,
                       'faff %.1f' % self.faff)
             if self.verbose == 'o':
                 if self.fdone:
@@ -94,4 +103,5 @@ class learning:
                     print('step %.1f'% self.j, 'avg reward %.10f' % \
                           np.mean(self.rewards[-25:]), 'current reward %.10f' % \
                           self.reward, 'max reward %.10f' % max(self.rewards),
+                          'max accuracy %.10f' % self.best_accuracy,
                           'faff %.1f' % self.faff)

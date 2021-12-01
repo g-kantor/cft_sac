@@ -48,21 +48,27 @@ class conf_blocks:
         return res_b
 
     def cons(self, z, zb, deltas, ope_coeffs, hh, block_type, spin_list):
+        c_tmp = 0.0
         c = - (z**(2*hh)) * (zb**(2*hh))
+        c_abs = abs((z**(2*hh)) * (zb**(2*hh)).real)
         for i in range(len(deltas)):
             if block_type[i] == 1:
-                c += ope_coeffs[i]*self.g_a(hh, (deltas[i])/2, (deltas[i])/2, z,
-                                            zb)
+                c_tmp = ope_coeffs[i]*self.g_a(hh, (deltas[i])/2, (deltas[i])/2, z, zb)
+                c += c_tmp
+                c_abs += abs(c_tmp.real)
             if block_type[i] == 2:
-                c += ope_coeffs[i]*self.g_a_symm(hh, (deltas[i] + spin_list[i])/2,
-                                                 (deltas[i] - spin_list[i])/2,
-                                                 z, zb)
+                c_tmp = ope_coeffs[i]*self.g_a_symm(hh, (deltas[i] + spin_list[i])/2,
+                                                 (deltas[i] - spin_list[i])/2, z, zb)
+                c += c_tmp
+                c_abs += abs(c_tmp.real)
             if block_type[i] == 3:
-                c -= ope_coeffs[i]*self.g_b(hh, (deltas[i])/2, (deltas[i])/2, z,
-                                            zb)
+                c_tmp = ope_coeffs[i]*self.g_b(hh, (deltas[i])/2, (deltas[i])/2, z, zb)
+                c -= c_tmp
+                c_abs += abs(c_tmp.real)
             if block_type[i] == 4:
-                c -= ope_coeffs[i]*self.g_b_symm(hh, (deltas[i] + spin_list[i])/2,
-                                                 (deltas[i] - spin_list[i])/2,
-                                                 z, zb)
+                c_tmp = ope_coeffs[i]*self.g_b_symm(hh, (deltas[i] + spin_list[i])/2,
+                                                 (deltas[i] - spin_list[i])/2, z, zb)
+                c -= c_tmp
+                c_abs += abs(c_tmp.real)
 
-        return c
+        return [c.real, c_abs]

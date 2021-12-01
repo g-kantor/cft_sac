@@ -7,10 +7,13 @@ import numpy as np
 if __name__ == '__main__':
     hp = hparams()
     lrn = learning(g_run=hp.guessing_run_list)
+    lrn.first_run = True
     window_scale_exp = 0
     max_window_exp = hp.max_window_exp
     rate = hp.window_rate
     pc = 0
+    best_accuracy = 0.0
+
     '''
     running_data = []
     tmp = []
@@ -22,7 +25,9 @@ if __name__ == '__main__':
     '''
 
     while window_scale_exp < max_window_exp:
+        lrn.best_accuracy = best_accuracy
         lrn.loop(window_scale_exp, rate)
+        best_accuracy = lrn.best_accuracy
         #for i in range(int(hp.action_space_N/2)):
         #    running_data[i] = running_data[i] + lrn.parameter_data_sets[i]
         if not lrn.productivity_counter:
