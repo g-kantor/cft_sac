@@ -23,27 +23,30 @@ class hparams:
         #Automation Run Parameters
         self.window_rate = 0.1 #window decrease rate (between 1 and 0)
         self.pc_max = 5 #max number of reinitialisations before window decrease
-        self.max_window_exp = 5 #maximum number of window changes
+        self.max_window_exp = 15 #maximum number of window changes
         #Environment Parameters
-        self.reward_reset = True #start with fresh reward?
-        self.guessing_run_list = np.array([1, 1, 1, 1, 1,
-                                           1, 1, 1, 1, 1], dtype=np.bool)
+        self.reward_reset = False #start with fresh reward?
+        self.guessing_run_list = np.array([0, 0, 0, 0, 0, 0, 0,
+                                           0, 0, 0, 0, 0, 0, 0], dtype=np.bool)
                                            #Toggle 1 or 0 for which paramaters to
                                            #start with previous result
         self.env_shape = 40 #number of z points
-        self.action_space_N = 10 # number of parameters or twice the number of operators
+        self.action_space_N = 14 # number of parameters or twice the number of operators
         self.hh = 0.05 #external weight/2
-        self.shifts = np.array([0.0, 1.5, 1.5, 0.5, 1.5,
-                                0.5, 0.0, 0.0, 0.0, 0.0]) #minimum values
-        self.guess_sizes = np.array([1.0, 1.0, 1.0, 1.2, 1.0,
-                                     1.0, 1.0, 1.0, 1.0, 1.0]) #starting windows
-        self.negative_list = [6] #which parameters can be negative
-        self.block_type = ['s1', 's2', 't1', 't2', 't2']
+        self.shifts = np.array([0.0, 1.5, 1.5, 0.5, 2.5, 1.5, 2.5,
+                                0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]) #minimum values
+        self.guess_sizes = np.array([0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
+                                     0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1]) #starting windows
+        self.neutral_list = [] #which parameters can be positive OR negative
+        self.positive_list = list(range(int(self.action_space_N/2))) + [7, 8, 9, 12]
+                               #which parameters are positive
+        self.negative_list = [10, 11, 13] #which parameters can be negative
+        self.block_type = ['s1', 's2', 't1', 't2', 't2', 't2', 't2']
                                        #type s1: g_a (scalar, s channel),
                                        #type s2: g_a_symm (spin > 1, s channel),
                                        #type t1: g_b (scalar, t channel),
                                        #type t2: g_b_symm (spin > 1, t channel)
-        self.spin_list = [0, 2, 0, 1, 2] #spin partition
+        self.spin_list = [0, 2, 0, 1, 1, 2, 3] #spin partition
         self.zre = [0.28174921068496483, 0.37171247358548106,
                     0.8192128071960839, 0.4898011929480619,
                     0.36433333577284366, 0.5868862180746248,

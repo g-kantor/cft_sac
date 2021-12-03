@@ -18,6 +18,8 @@ class env:
         self.max = 1.0
         self.shifts = hp.shifts
         self.guess_sizes = hp.guess_sizes
+        self.neutral_list = hp.neutral_list
+        self.positive_list = hp.positive_list
         self.negative_list = hp.negative_list
         self.hh = hp.hh
         self.guessing_run_list = hp.guessing_run_list
@@ -31,20 +33,27 @@ class env:
         self.nptrack = np.copy(action)
 
         for i in range(self.action_space_N):
-            if i in self.negative_list: #add here all the OPE squares which are
-                                        #negative
+            if i in self.neutral_list:
                 if self.guessing_run_list[i]:
                     self.nptrack[i] = self.shifts[i] + self.guess_sizes[i] * \
                                       self.nptrack[i]
                 else:
                     self.nptrack[i] = self.shifts[i] + self.guess_sizes[i] * \
                                       self.nptrack[i] + solution[i]
-            else:
+            if i in self.positive_list:
                 if self.guessing_run_list[i]:
                     self.nptrack[i] = self.shifts[i] + abs(self.guess_sizes[i] \
                                       * self.nptrack[i])
                 else:
                     self.nptrack[i] = self.shifts[i] + abs(self.guess_sizes[i] \
+                                      * self.nptrack[i] + solution[i])
+
+            if i in self.negative_list:
+                if self.guessing_run_list[i]:
+                    self.nptrack[i] = self.shifts[i] - abs(self.guess_sizes[i] \
+                                      * self.nptrack[i])
+                else:
+                    self.nptrack[i] = self.shifts[i] - abs(self.guess_sizes[i] \
                                       * self.nptrack[i] + solution[i])
 
         for i in range(self.env_shape):
