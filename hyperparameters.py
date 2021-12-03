@@ -28,17 +28,19 @@ class hparams:
         self.reward_reset = True #start with fresh reward?
         self.guessing_run_list = np.array([1, 0, 1, 1,
                                            1, 1, 1, 1], dtype=np.bool)
+                                           #Toggle 1 or 0 for which paramaters to
+                                           #start with previous result
         self.env_shape = 40 #number of z points
         self.action_space_N = 8 # number of parameters or twice the number of operators
         self.hh = 0.05 #external weight/2
         self.shifts = np.array([0.0, 1.5, 0.5, 1.5, 0.5, 0.0, 0.0, 0.0]) #minimum values
         self.guess_sizes = np.array([1.0, 1.0, 1.2, 1.0, 1.0, 1.0, 1.0, 1.0]) #starting windows
         self.negative_list = [6] #which parameters can be negative
-        self.block_type = [1, 3, 4, 4]
-                                       #type 1: g_a (scalar, s channel),
-                                       #type 2: g_a_symm (spin 1+, s channel),
-                                       #type 3: g_b (scalar, t channel),
-                                       #type 4: g_b_symm (spin 1+, t channel)
+        self.block_type = ['s1', 't1', 't2', 't2']
+                                       #type s1: g_a (scalar, s channel),
+                                       #type s2: g_a_symm (spin > 1, s channel),
+                                       #type t1: g_b (scalar, t channel),
+                                       #type t2: g_b_symm (spin > 1, t channel)
         self.spin_list = [0, 0, 1, 2] #spin partition
         self.zre = [0.28174921068496483, 0.37171247358548106,
                     0.8192128071960839, 0.4898011929480619,

@@ -32,8 +32,14 @@ class learning:
         tmp1 = f.readlines()
         tmp2 = []
         f.close()
-        for i in tmp1:
-            tmp2.append(float(i))
+        for i in range(len(tmp1) - 1):
+            if i==0:
+                tmp2.append(float(tmp1[i].split('=')[1]))
+            else:
+                if i==(int(len(self.env.nptrack)/2) + 1):
+                    pass
+                else:
+                    tmp2.append(float(tmp1[i].split('->')[1]))
         self.rewards = [tmp2[0]]
         self.solution = np.array(tmp2[1:]) - self.env.shifts
         self.strsol = []
@@ -46,6 +52,8 @@ class learning:
         self.env.guessing_run_list = g_run
         self.verbose = hp.verbose
         self.first_run = False
+        self.block_type = hp.block_type
+        self.spin_list = hp.spin_list
 
     def loop(self, iteration, rate):
         self.productivity_counter = False
@@ -70,11 +78,16 @@ class learning:
                 self.parameter_data_sets[i].append(self.env.nptrack[i])
 
             if self.env.done:
-                for i in self.env.nptrack:
-                    self.strsol.append(str(i) + '\n')
+                for i in range(len(self.env.nptrack)):
+                    self.strsol.append('(s=' + str(self.spin_list[i%(int(len(self.env.nptrack)/2))]) \
+                                        + ', ch=' + self.block_type[i%(int(len(self.env.nptrack)/2))] \
+                                        + ')' + ' -> ' + str(self.env.nptrack[i]) + '\n')
+                    if i == (int(len(self.env.nptrack)/2) - 1):
+                        self.strsol.append('-------------------------\n')
+                self.strsol.append('acc = ' + str(self.env.abs_error))
                 self.solution = np.copy(self.env.nptrack - self.env.shifts)
                 file = open('current_result.txt', 'w')
-                file.write(str(self.env.reward) + '\n') #FIRST LINE IS ACCURACY
+                file.write('reward = ' + str(self.env.reward) + '\n') #FIRST LINE IS ACCURACY
                 file.writelines(self.strsol)
                 file.close()
                 self.strsol = []

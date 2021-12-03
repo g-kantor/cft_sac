@@ -52,20 +52,20 @@ class conf_blocks:
         c = - (z**(2*hh)) * (zb**(2*hh))
         c_abs = abs((z**(2*hh)) * (zb**(2*hh)).real)
         for i in range(len(deltas)):
-            if block_type[i] == 1:
+            if block_type[i] == 's1':
                 c_tmp = ope_coeffs[i]*self.g_a(hh, (deltas[i])/2, (deltas[i])/2, z, zb)
                 c += c_tmp
                 c_abs += abs(c_tmp.real)
-            if block_type[i] == 2:
+            if block_type[i] == 's2':
                 c_tmp = ope_coeffs[i]*self.g_a_symm(hh, (deltas[i] + spin_list[i])/2,
                                                  (deltas[i] - spin_list[i])/2, z, zb)
                 c += c_tmp
                 c_abs += abs(c_tmp.real)
-            if block_type[i] == 3:
+            if block_type[i] == 't1':
                 c_tmp = ope_coeffs[i]*self.g_b(hh, (deltas[i])/2, (deltas[i])/2, z, zb)
                 c -= c_tmp
                 c_abs += abs(c_tmp.real)
-            if block_type[i] == 4:
+            if block_type[i] == 't2':
                 c_tmp = ope_coeffs[i]*self.g_b_symm(hh, (deltas[i] + spin_list[i])/2,
                                                  (deltas[i] - spin_list[i])/2, z, zb)
                 c -= c_tmp
