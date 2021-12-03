@@ -103,7 +103,6 @@ class learning:
                 self.fdone = True
 
             if self.verbose == 'e':
-                print(self.first_run)
                 print(self.solution + self.env.shifts)
                 print('step %.1f'% self.j, 'avg reward %.10f' % \
                       np.mean(self.rewards[-25:]), 'current reward %.10f' % \
