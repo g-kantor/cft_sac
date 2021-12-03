@@ -26,7 +26,7 @@ class hparams:
         self.max_window_exp = 5 #maximum number of window changes
         #Environment Parameters
         self.reward_reset = True #start with fresh reward?
-        self.guessing_run_list = np.array([1, 0, 1, 1,
+        self.guessing_run_list = np.array([1, 1, 1, 1,
                                            1, 1, 1, 1], dtype=np.bool)
                                            #Toggle 1 or 0 for which paramaters to
                                            #start with previous result
