@@ -1,0 +1,14 @@
+reward = 2.441259948639183
+ope D[0,4] multiplet, l=0, -> 1.0480461
+ope B[0,2] multiplet, l=2, -> 1.0160751
+ope B[0,2] multiplet, l=4, -> 1.164865
+ope L[0,0] multiplet, l=0, -> 0.22506365
+ope L[0,0] multiplet, l=2, -> 0.23734444
+ope L[0,0] multiplet, l=4, -> 0.98910457
+-------------------------
+delta D[0,4] multiplet, l=0, -> 6.0
+delta B[0,2] multiplet, l=2, -> 9.0
+delta B[0,2] multiplet, l=4, -> 10.0
+delta L[0,0] multiplet, l=0, -> 6.2423415
+delta L[0,0] multiplet, l=2, -> 8.690714
+delta L[0,0] multiplet, l=4, -> 10.059009
