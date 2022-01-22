@@ -31,11 +31,15 @@ class env:
         self.rho_lower = hp.rho_lower
         self.rho_upper = hp.rho_upper
         self.inho_value = self.cft.inhomo_z_vector()
-        self.short_cons = self.cft.short_cons(self.nptrack[int(self.action_space_N/2):])
+        self.short_coeffs = self.cft.short_cons_coeffs()
+        self.short_cons = np.zeros(self.env_shape)
+
+        #(self.nptrack[int(self.action_space_N/2):], self.block_type, self.spin_list)
 
     def move(self, action, largest, solution):
         self.nptrack = np.copy(action)
         number_operators = int(self.action_space_N / 2)
+
 
         for i in range(number_operators):    #move for the deltas
             if self.block_type[i] == 1:  # B[0,2] short multiplets
@@ -59,6 +63,12 @@ class env:
                 self.nptrack[i] = self.shifts[i] + abs(self.guess_sizes[i] * self.nptrack[i])
             else:
                 self.nptrack[i] = self.shifts[i] + abs(self.guess_sizes[i] * self.nptrack[i] + solution[i])
+
+        for i in range(self.env_shape):
+            temp = 0
+            for j in range(int(self.action_space_N / 2)):
+                temp += self.short_coeffs[i][j] * self.nptrack[int(self.action_space_N / 2) + j]
+            self.short_cons[i] = temp
 
         for i in range(self.env_shape):
             self.npstatus[i] = (self.inho_value[i] +
