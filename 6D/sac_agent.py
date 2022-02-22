@@ -39,9 +39,8 @@ class Agent():
 
     def choose_action(self, observation):
         state = T.Tensor([observation]).to(self.actor.device)
-        [actions, _, sigma] = self.actor.sample_normal(state)
-        #mm, ss = self.actor.give_dist(state)
-        #print(T.tanh(mm))
+        [actions, _, sigma] = self.actor.sample_normal(state, reparameterize=False)
+
         #print(sigma.cpu().detach().numpy()[0])
         self.stdv = sigma.cpu().detach().numpy()[0]
 

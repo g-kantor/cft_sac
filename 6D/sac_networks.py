@@ -123,7 +123,7 @@ class ActorNetwork(nn.Module):
         mu = self.mu(prob)
         sigma = self.sigma(prob)
 
-        #mu = T.clamp(mu, min=0.0, max=100.0) #CHANGED!!!!!!!!!!
+        #sigma = T.clamp(sigma, min=self.reparam_noise, max=0.005)
         sigma = T.clamp(sigma, min=self.reparam_noise, max=1.0)
 
         return mu, sigma
@@ -143,11 +143,6 @@ class ActorNetwork(nn.Module):
         log_probs = log_probs.sum(1, keepdim=True)
 
         return [action, log_probs, sigma]
-
-    def give_dist(self, state):
-        mu, sigma = self.forward(state)
-
-        return mu, sigma
 
     def save_checkpoint(self):
         T.save(self.state_dict(), self.checkpoint_file)
