@@ -120,13 +120,13 @@ class conf_blocks:
     def h(self, z):
         #Compute h(z) defined in eqn (4.9) of 1507.05637
         res = self.h_atomic(0, z) + 8 * self.inv_c_charge * self.h_atomic(2, z) + \
-              np.sum(self.b_l(k) * self.h_atomic(k + 4, z) for k in range(0, 25, 2)) #WHY +1????
+              np.sum(self.b_l(k) * self.h_atomic(k + 4, z) for k in range(0, 25, 2))
         return res
 
     def a_chi(self, z, zb):
         """Computes the function given in (4.11) of 1507.05637"""
         res_a = np.sum((2 ** k) * self.b_l(k)
-                       * self.a_atomic(k + 4, k, z, zb) for k in range(0, 25, 2)) #WHY +1????
+                       * self.a_atomic(k + 4, k, z, zb) for k in range(0, 25, 2))
         return res_a
 
     def inhomo_z_vector(self):

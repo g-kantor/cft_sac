@@ -45,8 +45,9 @@ class hparams:
                                                                         #initial search window size for OPE coeffs
         self.shifts_deltas = np.array([8.0, 9.0, 11.0, 13.0, 15.0, 5.6, 5.6, 5.6, 7.6, 7.6, 9.6])
                                                                         #set minimum values for deltas
-        self.shifts_opecoeffs = np.array([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0])
+        self.shifts_opecoeffs = np.array([0.5, 7.5, 17.0, 19.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0])
                                                                         #set minimum values for OPE coeffs
+        self.dyn_shift = 0.0 #set the gap between same multiplet same spin deltas
         self.block_type = ['d4', 'b2', 'b2', 'b2', 'b2', 'l', 'l', 'l', 'l', 'l', 'l']
         self.block_type_printed = {'d4': 'D[0,4]', 'b2': 'B[0,2]', 'l': 'L[0,0]'}
                                                                         # type d4: D[0,4] short multiplets
