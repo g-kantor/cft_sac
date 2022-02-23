@@ -24,6 +24,7 @@ class env:
         self.multiplet_index = hp.multiplet_index
         self.block_type = hp.block_type
         self.spin_list = hp.spin_list
+        self.dyn_shift = hp.dyn_shift
 
         self.inho_value = self.cft.inhomo_z_vector()
         self.short_d_hypers = self.cft.short_coeffs_d_multiplet()
@@ -46,21 +47,27 @@ class env:
             flag_current = self.dup_list[i]
             flag_next_tmp = False
 
+
             if flag_next and not flag_current:
-                self.nptrack[i] = np.clip(self.nptrack[i], a_min=self.nptrack[i-1],
-                                          a_max=None)
+                self.nptrack[i] = np.clip(self.nptrack[i], a_min=(self.nptrack[i-1] \
+                                          + self.dyn_shift), a_max=None)
+
             if flag_current and not flag_next:
-                self.nptrack[i] = np.clip(self.nptrack[i], a_min=None,
-                                          a_max=self.nptrack[i+1])
+                #self.nptrack[i] = np.clip(self.nptrack[i], a_min=None,
+                #                          a_max=(self.nptrack[i+1]))
                 flag_next_tmp = True
 
             if flag_current and flag_next:
+                '''
                 if self.nptrack[i - 1] > self.nptrack[i + 1]:
-                    self.nptrack[i] = np.clip(self.nptrack[i], a_min=self.nptrack[i-1],
-                                              a_max=None)
+                    self.nptrack[i] = np.clip(self.nptrack[i], a_min=(self.nptrack[i-1] \
+                                              + self.dyn_shift), a_max=None)
                 else:
-                    self.nptrack[i] = np.clip(self.nptrack[i], a_min=self.nptrack[i-1],
-                                              a_max=self.nptrack[i+1])
+                    self.nptrack[i] = np.clip(self.nptrack[i], a_min=(self.nptrack[i-1] \
+                                              + self.dyn_shift))
+                '''
+                self.nptrack[i] = np.clip(self.nptrack[i], a_min=(self.nptrack[i-1] \
+                                          + self.dyn_shift), a_max=None)
                 flag_next_tmp = True
 
             flag_next = flag_next_tmp
